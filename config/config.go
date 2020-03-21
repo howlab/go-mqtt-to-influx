@@ -351,6 +351,7 @@ var implementationsAndDefaultMeasurement = map[string]string{
 	"lwt":            "boolValue",
 	"tasmota-state":  "boolValue",
 	"tasmota-sensor": "floatValue",
+	"senml":	  "measurement",
 }
 
 func (c converterConfigRead) TransformAndValidate(
