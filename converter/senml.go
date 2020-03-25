@@ -66,7 +66,7 @@ func senmlHandler(c Config, input Input, outputFunc OutputFunc) {
 		log.Printf("senml[%s]: cannot senml normalize: %s", c.Name(), err)
 		return
 	}
-
+	baseTime := time.Now()
 	for _, record := range message.Records {
 
 		deviceURN, _ := urn.TryParseString(record.Name)
@@ -93,8 +93,8 @@ func senmlHandler(c Config, input Input, outputFunc OutputFunc) {
 		field := deviceURNParts[1]
 
 		var timestamp time.Time
-		if record.Time == 0 {
-			timestamp = time.Now()
+		if record.Time < 1<<28 {
+			timestamp = baseTime.Add(time.Duration(record.Time)*time.Millisecond)
 		} else {
 			timestamp = time.Unix(int64(record.Time),int64(0))
 		}
