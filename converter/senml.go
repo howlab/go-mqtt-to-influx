@@ -69,7 +69,12 @@ func senmlHandler(c Config, input Input, outputFunc OutputFunc) {
 	baseTime := time.Now()
 	for _, record := range message.Records {
 
-		deviceURN, _ := urn.TryParseString(record.Name)
+		deviceURN, success := urn.TryParseString(record.Name)
+
+		if success != true {
+			log.Printf("senml[%s]: Error parsing URN string (%s): %s", c.Name(), record.Name, err)
+			return
+		}
 
 		var deviceURNParts []string
 
