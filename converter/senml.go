@@ -72,7 +72,7 @@ func senmlHandler(c Config, input Input, outputFunc OutputFunc) {
 		deviceURN, success := urn.TryParseString(record.Name)
 
 		if success != true {
-			log.Printf("senml[%s]: Error parsing URN string (%s): %s", c.Name(), record.Name, err)
+			log.Printf("senml[%s]: Error parsing URN string: %s", c.Name(), record.Name)
 			return
 		}
 
@@ -89,8 +89,12 @@ func senmlHandler(c Config, input Input, outputFunc OutputFunc) {
 
 		if ( deviceURN.GetNamespaceID() == "dev" ) {
 			deviceBody= strings.Split(deviceURNParts[0],":")
+			if len(deviceBody) < 2 {
+				log.Printf("senml[%s]: DEV URN subtype not found: %s", c.Name(), deviceURN)
+				return
+			}
 		} else {
-			deviceBody = append(deviceBody,"urn", deviceURNParts[0])
+			log.Printf("senml[%s]: URN namespace not supported: %s. Supported namespaces: [dev].", "", deviceURN)
 		}
 
 		deviceTagIdentifier := deviceBody[0]
