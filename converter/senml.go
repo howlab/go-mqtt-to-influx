@@ -95,6 +95,7 @@ func senmlHandler(c Config, input Input, outputFunc OutputFunc) {
 			}
 		} else {
 			log.Printf("senml[%s]: URN namespace not supported: %s. Supported namespaces: [dev].", "", deviceURN)
+			return
 		}
 
 		deviceTagIdentifier := deviceBody[0]
