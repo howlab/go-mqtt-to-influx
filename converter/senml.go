@@ -94,7 +94,7 @@ func senmlHandler(c Config, input Input, outputFunc OutputFunc) {
 				return
 			}
 		} else {
-			log.Printf("senml[%s]: URN namespace not supported: %s. Supported namespaces: [dev].", "", deviceURN)
+			log.Printf("senml[%s]: URN namespace not supported: %s. Supported namespaces: [dev].", c.Name(), deviceURN)
 			return
 		}
 
