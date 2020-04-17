@@ -3,6 +3,7 @@ package converter
 import (
 	"log"
 	"time"
+	"math"
 	"strings"
 	"regexp"
 	"github.com/mainflux/senml"
@@ -106,7 +107,8 @@ func senmlHandler(c Config, input Input, outputFunc OutputFunc) {
 		if record.Time < 1<<28 {
 			timestamp = baseTime.Add(time.Duration(record.Time)*time.Second)
 		} else {
-			timestamp = time.Unix(int64(record.Time),int64(0))
+			sec, dec := math.Modf(record.Time);
+			timestamp = time.Unix(int64(sec),int64(dec*(1e9)))
 		}
 
 		outputFunc(senmlOutputMessage{
