@@ -104,7 +104,7 @@ func senmlHandler(c Config, input Input, outputFunc OutputFunc) {
 
 		var timestamp time.Time
 		if record.Time < 1<<28 {
-			timestamp = baseTime.Add(time.Duration(record.Time)*time.Millisecond)
+			timestamp = baseTime.Add(time.Duration(record.Time)*time.Second)
 		} else {
 			timestamp = time.Unix(int64(record.Time),int64(0))
 		}
